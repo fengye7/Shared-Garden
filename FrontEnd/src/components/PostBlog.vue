@@ -112,8 +112,8 @@ export default {
       // oss初始化
       this.client = new OSS({
       region: 'oss-cn-hangzhou', 
-      accessKeyId: '', git出错受秘密影响，删掉id和secret
-      accessKeySecret: '', 
+      //git出错受秘密影响，删掉id和secret
+      
       bucket: 'sharing-garden'
       })
       try {
