@@ -1,0 +1,124 @@
+body{
+    background-color: rgb(244, 237, 228) !important;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.result-body{
+  background-image: url("../assets/img-what-you-need.jpg");
+  background-size: auto;
+  /* background-repeat: repeat-y;
+  position: relative;
+  background-position: right;
+  animation: fade-in 3s forwards; */
+  background-repeat: no-repeat;
+  position: relative;
+  background-position: 65vw 35vh;
+  background-attachment: fixed;
+}
+
+@keyframes slide-in-from-right {
+    from {
+        transform: translateX(150%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes rotateSlideIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-90deg) translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0) translateX(0);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.result-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 950px;
+  height: 200px;
+  padding: 0px;
+  margin: 20px auto;
+  border-radius: 5px;
+  background-color: rgb(244, 237, 228);
+  animation: slide-in-from-right 3s forwards;
+}
+
+.all-img-head{
+    animation: rotateSlideIn 2s ease-in-out;
+}
+
+.navtag {
+  font-size: 3.5vh;
+  color: rgb(12, 60, 38) !important;
+}
+
+.gardenResults{
+    background-color: rgb(244, 237, 228) !important;
+    animation: fade-in 3s backwards;
+    margin: 20px;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.53);
+    width: 600px;
+}
+
+.volunteerResults{
+    background-color: rgb(244, 237, 228) !important;
+    animation: fade-in 3s backwards;
+    margin: 20px;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.53);
+    width: 600px;
+    height: auto;
+}
+
+.blogResults{
+  width: 800px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 20px auto;
+  border-radius: 5px;
+  background-color: rgb(233, 218, 197);
+}
+
+.activityResults{
+    padding: 2vh;
+
+  border-width: 0vh;
+  border-radius: 2vh;
+
+  box-shadow: 8px 8px 24px rgba(0, 0, 0, 0.2);
+  background-color: rgb(244, 237, 228);
+
+  margin-top: 6vh;
+  margin-bottom: 6vh;
+
+  animation: slide-in-from-bottom 2s;
+}
+
+.upload-container{
+  margin-left: 0px;
+}

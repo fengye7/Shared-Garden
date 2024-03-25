@@ -1,0 +1,144 @@
+﻿using Garden.BLL.Interfaces;
+using Garden.DAL;
+using Garden.Models;
+
+namespace Garden.BLL
+{
+    public class GardenBLL : IGardenBLL
+    {
+        GardenDAL gardenDAL = new();
+        GardenCommentsDAL gardenCommentsDAL = new();
+        GardenMaintenanceDAL gardenMaintenanceDAL = new();
+
+        public static List<GardenEntity> Shuffle(List<GardenEntity> list)
+        {
+            if (list.Count == 0)
+                return list;
+            Random random = new();
+            return list.OrderBy(x => random.Next()).ToList();
+        }
+
+        public GardenEntity GetGardenInfo(string id)
+        {
+            return GardenDAL.GetGardenById(id, out _);
+        }
+
+        public string GetGardenNameById(string id)
+        {
+            return GardenDAL.GetGardenById(id, out _).Name;
+        }
+
+        public GardenEntity GetGardenRandomly()
+        {
+            return gardenDAL.GetGardenRandomly();
+        }
+
+        public List<GardenEntity> GetHotGardens(int cur_num, int len)
+        {
+            List<GardenEntity> list = gardenDAL.GetTopGardens();
+            list = list.Skip(cur_num).Take(len).ToList();
+            return list;
+        }
+
+        public List<GardenEntity> GetUserGardens(string id)
+        {
+            return gardenDAL.GetGardensByOwnerId(id);
+        }
+
+        public List<GardenEntity> GetPopularGardens(int page)
+        {
+            int offset = (page - 1) * 10;
+            return Shuffle(gardenDAL.GetPopularGardens(offset));
+        }
+
+        public List<GardenEntity> GetRecentGardens(int page)
+        {
+            int offset = (page - 1) * 10;
+            return Shuffle(gardenDAL.GetRecentGardens(offset));
+        }
+
+        public List<GardenEntity> GetTopGardens()
+        {
+            return gardenDAL.GetTopGardens();
+        }
+
+        public List<GardenComments> GetCommentsByGardenId(string garden_id)
+        {
+            return gardenCommentsDAL.GetCommentsByGardenId(garden_id);
+        }
+
+        public bool AddGardenComment(string userId, string gardenId, string comment)
+        {
+            int maxId = 0;
+            foreach (GardenComments gc in gardenCommentsDAL.GetAllComments())
+            {
+                if (int.Parse(gc.CommentId) > maxId)
+                {
+                    maxId = int.Parse(gc.CommentId);
+                }
+            }
+            maxId += 1;
+            string id = maxId.ToString();
+
+            gardenCommentsDAL.Insert(new GardenComments
+            {
+                CommentId = id,
+                GardenId = gardenId,
+                Content = comment,
+                OwnerId = userId,
+                ReleaseTime = DateTime.Now
+            });
+            return true;
+        }
+
+        public string Insert(GardenEntity garden)
+        {
+            if (gardenDAL.Insert(garden))
+            {
+                return "插入成功";
+            }
+            else
+            {
+                return "插入失败";
+            }
+        }
+
+
+        //获取互动信息：用户评论
+        //输入用户id
+        //返回评论信息
+        public List<GardenComments> GetUserGardenComments(string account_id)
+        {
+            return gardenCommentsDAL.GetUserGardenComments(account_id);
+        }
+
+
+        //获取花园维护信息：用户工作记录
+        //输入用户id
+        //返回工作记录
+        public List<GardenMaintenance> GetUserMaintenance(string account_id)
+        {
+            return gardenMaintenanceDAL.GetUserMaintenance(account_id);
+        }
+
+        // 获取评论花园历史记录（GardenCommentInfo形式）
+        // 输入用户id
+        public List<GardenCommentInfo> GetGardenCommentInfos(string account_id)
+        {
+            return GardenDAL.GetGardenCommentInfo(account_id);
+        }
+
+        // 获取点赞（Star）花园历史记录（GardenCommentInfo形式）
+        // 输入用户id
+        public List<GardenLikeInfo> GetGardenLikeInfos(string account_id)
+        {
+            return GardenDAL.GetGardenLikeInfo(account_id);
+        }
+
+        // 输入用户id，获取简略版花园信息（GardenInfo）
+        public List<GardenInfo> GetGardenInfos(string account_id)
+        {
+            return GardenDAL.ToGardenInfoList(GetUserGardens(account_id));
+        }
+    }
+}
