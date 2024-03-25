@@ -12,8 +12,8 @@ namespace Garden.DAL.Core
 {
     public static class OSSHelper
     {
-        static string accessKeyId = "LTAI5tC6nc26iJYDa7iWJFRZ";
-        static string accessKeySecret = "tZEndrhkAdUFo1PDUQcInGfwJKynm0";
+        //static string accessKeyId = "LTAI5tC6nc26iJYDa7iWJFRZ"; git操作出错，受秘密影响
+        //static string accessKeySecret = "tZEndrhkAdUFo1PDUQcInGfwJKynm0";
         static string endpoint = "oss-cn-hangzhou.aliyuncs.com";
         static string bucketName = "sharing-garden";    //OSS图片存储空间
 
